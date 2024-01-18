@@ -16,7 +16,7 @@ const AddUser=(props)=>{
       setIsFormValid(enteredCollegeName.trim().length !== 0);
     }, [enteredCollegeName]);
 
-    const addUserHandler=(event)=>{    
+    const addUserHandle=(event)=>{    
     event.preventDefault();
     if(enteredUsername.trim().length===0||enteredAge.trim().length===0||enteredCollegeName.trim().length===0){
         setError({
@@ -80,5 +80,38 @@ const addUserHandler = (event) => {
   setError(null);  // Clearing the error state
 };
 const usernameChangeHandler=(event)=>{
-setEnteredUsername(event.target.value)}
-export default addUserHandler;
+setEnteredUsername(event.target.value)
+}
+const collegeChangeHandler=(event)=>{
+  setEnteredCollegeName(event.target.value)
+  }
+const ageChangeHandler=(event)=>{
+    setEnteredAge(event.target.value)
+    }
+    const errorHandler = () => {
+        setError(null);
+      };
+return(
+    <Wrapper>
+    {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={errorHandler}
+        />
+      )}
+    <Card className={classes.input}>
+    <form onSubmit={addUserHandler}>
+        <label htmlFor='username'>Username</label>
+        <input id='username' type='text' value={enteredUsername} onChange={usernameChangeHandler}/>
+        <label htmlFor='age'>Age(years)</label>
+        <input id='age' type='number'value={enteredAge} onChange={ageChangeHandler}/>
+        <label htmlFor='college'>College Name</label>
+        <input id='college' type='text' value={enteredCollegeName} onChange={collegeChangeHandler}/>
+        
+        <Button type='submit'>Add User</Button>
+    </form>
+    </Card>
+    </Wrapper>
+)}
+export default AddUser
